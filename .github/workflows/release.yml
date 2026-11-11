@@ -1,0 +1,40 @@
+name: Draft Windows release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-draft:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install .NET 9 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Build, test and package
+        shell: pwsh
+        run: .\BUILD-INSTALLER.ps1
+
+      - name: Create draft release for review
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        shell: pwsh
+        run: |
+          gh release create "$env:RELEASE_TAG" `
+            ".\dist\NORADRENALINE-ULTRA-Windows-x64.zip" `
+            ".\dist\NORADRENALINE-ULTRA-Windows-x64.zip.sha256" `
+            --draft `
+            --verify-tag `
+            --title "NORADRENALINE ULTRA $env:RELEASE_TAG" `
+            --notes "Automated Windows x64 build. Review the build and SHA-256 before publishing this release. The package is not code-signed."

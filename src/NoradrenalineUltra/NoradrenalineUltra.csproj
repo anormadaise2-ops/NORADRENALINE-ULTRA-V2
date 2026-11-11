@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>NoradrenalineUltra</AssemblyName>
+    <Product>NORADRENALINE ULTRA</Product>
+    <Version>0.1.0</Version>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup Condition="Exists('..\..\NORA-X1-DRIVER\BUILD\bin\$(Configuration)\nora-x1-probe.exe')">
+    <Content Include="..\..\NORA-X1-DRIVER\BUILD\bin\$(Configuration)\nora-x1-probe.exe"
+             Link="nora-x1-probe.exe"
+             CopyToOutputDirectory="PreserveNewest"
+             CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

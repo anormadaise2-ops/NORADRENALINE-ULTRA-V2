@@ -1,0 +1,560 @@
+<Window x:Class="NoradrenalineUltra.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="NORADRENALINE ULTRA"
+        Width="1440"
+        Height="900"
+        MinWidth="1100"
+        MinHeight="680"
+        WindowStartupLocation="CenterScreen"
+        Background="#080C12"
+        Foreground="#E8F0FA"
+        FontFamily="Segoe UI">
+    <Window.Resources>
+        <SolidColorBrush x:Key="PanelBrush" Color="#E6121B28" />
+        <SolidColorBrush x:Key="PanelBorderBrush" Color="#FF26364A" />
+        <SolidColorBrush x:Key="MutedBrush" Color="#FF8D9AAF" />
+        <SolidColorBrush x:Key="AccentBrush" Color="#FF4AD9F4" />
+
+        <Style x:Key="PanelStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource PanelBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource PanelBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="Padding" Value="18" />
+        </Style>
+
+        <Style x:Key="ActionButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="#FFEAFBFF" />
+            <Setter Property="Background" Value="#FF123040" />
+            <Setter Property="BorderBrush" Value="#FF27647A" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="16,10" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="7"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#FF19485B" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="ButtonBorder" Property="Opacity" Value="0.5" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="QuietButtonStyle" TargetType="Button" BasedOn="{StaticResource ActionButtonStyle}">
+            <Setter Property="Foreground" Value="#FFB8C6D8" />
+            <Setter Property="Background" Value="#FF151D29" />
+            <Setter Property="BorderBrush" Value="#FF2B384A" />
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Foreground" Value="#FF9FB0C4" />
+            <Setter Property="Background" Value="#FF111925" />
+            <Setter Property="BorderBrush" Value="#FF253244" />
+            <Setter Property="BorderThickness" Value="0,0,0,1" />
+            <Setter Property="Padding" Value="12,11" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+
+        <Style TargetType="DataGridCell">
+            <Setter Property="Foreground" Value="#FFE0E8F2" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="10,8" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.Background>
+            <RadialGradientBrush GradientOrigin="0.85,0.08" Center="0.85,0.08" RadiusX="0.9" RadiusY="1.1">
+                <GradientStop Color="#FF123044" Offset="0" />
+                <GradientStop Color="#FF0B111B" Offset="0.48" />
+                <GradientStop Color="#FF080C12" Offset="1" />
+            </RadialGradientBrush>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="228" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Background="#B80D131E" BorderBrush="#332B3A4D" BorderThickness="0,0,1,0">
+            <DockPanel Margin="20,22">
+                <StackPanel DockPanel.Dock="Top">
+                    <TextBlock Text="NORA" FontSize="26" FontWeight="Bold" Foreground="#FFECF8FF" />
+                    <TextBlock Text="NORADRENALINE ULTRA"
+                               Margin="0,1,0,28"
+                               FontSize="10"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource AccentBrush}" />
+                    <TextBlock Text="WORKSPACE" FontSize="10" FontWeight="Bold" Foreground="{StaticResource MutedBrush}" />
+                    <Button x:Name="GameNavButton"
+                            Content="Game Center"
+                            Click="ShowGames_Click"
+                            Style="{StaticResource QuietButtonStyle}"
+                            Margin="0,12,0,5"
+                            HorizontalContentAlignment="Left" />
+                    <Button x:Name="DriverNavButton"
+                            Content="Driver Center"
+                            Click="ShowDrivers_Click"
+                            Style="{StaticResource ActionButtonStyle}"
+                            HorizontalContentAlignment="Left" />
+                    <Button x:Name="GraphicsNavButton"
+                            Content="NORA X1"
+                            Click="ShowGraphics_Click"
+                            Style="{StaticResource QuietButtonStyle}"
+                            Margin="0,5,0,0"
+                            HorizontalContentAlignment="Left" />
+                    <TextBlock Text="PLANNED MODULES"
+                               Margin="0,26,0,10"
+                               FontSize="10"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource MutedBrush}" />
+                    <TextBlock Text="Hardware Monitor" Margin="4,5" Foreground="#FF758397" />
+                    <TextBlock Text="System Repair" Margin="4,5" Foreground="#FF758397" />
+                    <TextBlock Text="Network Optimizer" Margin="4,5" Foreground="#FF758397" />
+                    <TextBlock Text="NORA Reflex · planned" Margin="4,5" Foreground="#FF758397" />
+                </StackPanel>
+
+                <StackPanel DockPanel.Dock="Bottom">
+                    <Border Height="1" Background="#FF263345" Margin="0,0,0,14" />
+                    <TextBlock Text="LOCAL DIAGNOSTICS"
+                               FontSize="10"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource MutedBrush}" />
+                    <TextBlock Text="No data is uploaded."
+                               Margin="0,7,0,0"
+                               FontSize="11"
+                               Foreground="#FF9EADBF" />
+                    <TextBlock Text="Windows device inventory"
+                               Margin="0,4,0,0"
+                               FontSize="11"
+                               Foreground="#FF9EADBF" />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <Grid Grid.Column="1">
+            <Grid x:Name="DriverPage" Margin="30,22,30,18">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Margin="0,0,0,28">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock Text="NORA CORE  /  DRIVER CENTER" FontSize="11" Foreground="{StaticResource AccentBrush}" />
+                    <TextBlock Text="Device &amp; driver inventory"
+                               Margin="0,5,0,0"
+                               FontSize="25"
+                               FontWeight="SemiBold" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Ellipse x:Name="ConnectionIndicator" Width="8" Height="8" Fill="#FF8793A4" Margin="0,0,8,0" />
+                    <TextBlock x:Name="ConnectionStatus" Text="Not scanned" Foreground="{StaticResource MutedBrush}" VerticalAlignment="Center" />
+                </StackPanel>
+                </Grid>
+
+                <Grid x:Name="GamePage" Margin="30,22,30,18" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="0,0,0,24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="NORA CORE  /  GAME CENTER" FontSize="11" Foreground="{StaticResource AccentBrush}" />
+                            <TextBlock Text="Your library. Your launch. Your control."
+                                       Margin="0,5,0,0"
+                                       FontSize="25"
+                                       FontWeight="SemiBold" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                            <Ellipse x:Name="GameStatusIndicator" Width="8" Height="8" Fill="#FF8793A4" Margin="0,0,8,0" />
+                            <TextBlock x:Name="GameStatusText"
+                                       Text="Library not scanned"
+                                       Foreground="{StaticResource MutedBrush}"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Grid.Row="1" Margin="0,0,0,18">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource PanelStyle}" Margin="0,0,10,0">
+                            <StackPanel>
+                                <TextBlock Text="INSTALLED GAMES" FontSize="10" FontWeight="Bold" Foreground="{StaticResource MutedBrush}" />
+                                <TextBlock x:Name="GameCountText" Text="0" Margin="0,9,0,0" FontSize="26" FontWeight="SemiBold" />
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="1" Style="{StaticResource PanelStyle}" Margin="5,0">
+                            <StackPanel>
+                                <TextBlock Text="LAUNCH PROFILE" FontSize="10" FontWeight="Bold" Foreground="{StaticResource MutedBrush}" />
+                                <TextBlock x:Name="GameProfileSummaryText"
+                                           Text="Normal priority"
+                                           Margin="0,9,0,0"
+                                           FontSize="18"
+                                           FontWeight="SemiBold" />
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="2" Style="{StaticResource PanelStyle}" Margin="10,0,0,0">
+                            <StackPanel>
+                                <TextBlock Text="UPSCALE INTEGRATION" FontSize="10" FontWeight="Bold" Foreground="{StaticResource MutedBrush}" />
+                                <TextBlock Text="Not integrated"
+                                           Margin="0,9,0,0"
+                                           FontSize="18"
+                                           FontWeight="SemiBold" />
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <Border Grid.Row="2" Style="{StaticResource PanelStyle}" Padding="18">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <DockPanel Grid.Row="0" Margin="0,0,0,14">
+                                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                                    <Button x:Name="RemoveGameButton"
+                                            Content="REMOVE CUSTOM GAME"
+                                            Click="RemoveGame_Click"
+                                            Style="{StaticResource QuietButtonStyle}"
+                                            Margin="8,0,0,0"
+                                            IsEnabled="False" />
+                                    <Button x:Name="OpenGameFolderButton"
+                                            Content="OPEN FOLDER"
+                                            Click="OpenGameFolder_Click"
+                                            Style="{StaticResource QuietButtonStyle}"
+                                            Margin="8,0,0,0"
+                                            IsEnabled="False" />
+                                    <Button x:Name="LaunchGameButton"
+                                            Content="APPLY PROFILE &amp; LAUNCH"
+                                            Click="LaunchGame_Click"
+                                            Style="{StaticResource ActionButtonStyle}"
+                                            Margin="8,0,0,0"
+                                            IsEnabled="False" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Button Content="SCAN GAME LIBRARIES"
+                                            Click="ScanGames_Click"
+                                            Style="{StaticResource ActionButtonStyle}" />
+                                    <Button Content="ADD GAME .EXE"
+                                            Click="AddGame_Click"
+                                            Style="{StaticResource QuietButtonStyle}"
+                                            Margin="8,0,0,0" />
+                                    <ComboBox x:Name="GamePriorityBox"
+                                              Width="188"
+                                              Height="38"
+                                              Margin="12,0,0,0"
+                                              Background="#FF111925"
+                                              Foreground="#FFE7EFF8"
+                                              ToolTip="Optional, per-game process scheduling priority. No global settings are changed.">
+                                        <ComboBoxItem Content="Normal priority" Tag="Normal" IsSelected="True" />
+                                        <ComboBoxItem Content="Above normal · game only" Tag="AboveNormal" />
+                                    </ComboBox>
+                                </StackPanel>
+                            </DockPanel>
+
+                            <DataGrid x:Name="GameGrid"
+                                      Grid.Row="1"
+                                      AutoGenerateColumns="False"
+                                      CanUserAddRows="False"
+                                      IsReadOnly="True"
+                                      SelectionMode="Single"
+                                      SelectionUnit="FullRow"
+                                      SelectionChanged="GameGrid_SelectionChanged"
+                                      Background="Transparent"
+                                      RowBackground="#00101825"
+                                      AlternatingRowBackground="#22192330"
+                                      HorizontalGridLinesBrush="#332B3848"
+                                      VerticalGridLinesBrush="Transparent"
+                                      BorderThickness="0"
+                                      HeadersVisibility="Column"
+                                      GridLinesVisibility="Horizontal"
+                                      CanUserResizeRows="False">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="GAME" Binding="{Binding Name}" Width="2*" />
+                                    <DataGridTextColumn Header="PLATFORM" Binding="{Binding Platform}" Width="1*" />
+                                    <DataGridTextColumn Header="LAUNCH" Binding="{Binding LaunchMode}" Width="1.1*" />
+                                    <DataGridTextColumn Header="INSTALL LOCATION" Binding="{Binding InstallPath}" Width="2.4*" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                            <Grid Grid.Row="2" Margin="0,14,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Name="GameActivityText"
+                                           Text="Scan Steam and Epic manifests, or add a game executable."
+                                           Foreground="{StaticResource MutedBrush}"
+                                           FontSize="11"
+                                           TextTrimming="CharacterEllipsis"
+                                           VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="1"
+                                           Text="Per-game launch only · no global tweaks"
+                                           Foreground="#FF718096"
+                                           FontSize="11"
+                                           Margin="18,0,0,0"
+                                           VerticalAlignment="Center" />
+                            </Grid>
+                        </Grid>
+                    </Border>
+
+                    <TextBlock Grid.Row="3"
+                               Text="Above-normal priority is optional and applies only to a directly launched game process. It is not a guaranteed FPS boost."
+                               Foreground="{StaticResource MutedBrush}"
+                               FontSize="11"
+                               Margin="0,12,0,0" />
+                </Grid>
+
+                <Grid x:Name="GraphicsPage" Margin="30,22,30,18" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="0,0,0,24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="NORA X1  /  USER-MODE PROBE" FontSize="11" Foreground="{StaticResource AccentBrush}" />
+                            <TextBlock Text="Graphics capabilities"
+                                       Margin="0,5,0,0"
+                                       FontSize="25"
+                                       FontWeight="SemiBold" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                            <Ellipse x:Name="GraphicsStatusIndicator" Width="8" Height="8" Fill="#FF8793A4" Margin="0,0,8,0" />
+                            <TextBlock x:Name="GraphicsStatusText"
+                                       Text="Probe not run"
+                                       Foreground="{StaticResource MutedBrush}"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Grid.Row="1" Margin="0,0,0,18">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource PanelStyle}" Margin="0,0,10,0">
+                            <StackPanel>
+                                <TextBlock Text="USER-MODE COMPONENT" FontSize="10" FontWeight="Bold" Foreground="{StaticResource MutedBrush}" />
+                                <TextBlock Text="DXGI probe" Margin="0,9,0,0" FontSize="20" FontWeight="SemiBold" />
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="1" Style="{StaticResource PanelStyle}" Margin="5,0">
+                            <StackPanel>
+                                <TextBlock Text="DEVICE CHANGES" FontSize="10" FontWeight="Bold" Foreground="{StaticResource MutedBrush}" />
+                                <TextBlock Text="None · read only" Margin="0,9,0,0" FontSize="20" FontWeight="SemiBold" />
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="2" Style="{StaticResource PanelStyle}" Margin="10,0,0,0">
+                            <StackPanel>
+                                <TextBlock Text="UPSCALE / FRAME GENERATION" FontSize="10" FontWeight="Bold" Foreground="{StaticResource MutedBrush}" />
+                                <TextBlock Text="Not implemented" Margin="0,9,0,0" FontSize="20" FontWeight="SemiBold" />
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <Border Grid.Row="2" Style="{StaticResource PanelStyle}" Padding="0" ClipToBounds="True">
+                        <DataGrid x:Name="GraphicsAdapterGrid"
+                                  AutoGenerateColumns="False"
+                                  CanUserAddRows="False"
+                                  IsReadOnly="True"
+                                  Background="Transparent"
+                                  RowBackground="#00101825"
+                                  AlternatingRowBackground="#22192330"
+                                  HorizontalGridLinesBrush="#332B3848"
+                                  VerticalGridLinesBrush="Transparent"
+                                  BorderThickness="0"
+                                  HeadersVisibility="Column"
+                                  GridLinesVisibility="Horizontal"
+                                  CanUserResizeRows="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="DISPLAY ADAPTER" Binding="{Binding Name}" Width="2*" />
+                                <DataGridTextColumn Header="VENDOR" Binding="{Binding Vendor}" Width="0.8*" />
+                                <DataGridTextColumn Header="DEVICE ID" Binding="{Binding DeviceId}" Width="1*" />
+                                <DataGridTextColumn Header="DRIVER VERSION" Binding="{Binding DriverVersion}" Width="1*" />
+                                <DataGridTextColumn Header="DEDICATED VRAM" Binding="{Binding DedicatedVideoMemoryBytes, StringFormat={}{0:N0} bytes}" Width="1.2*" />
+                                <DataGridCheckBoxColumn Header="D3D12" Binding="{Binding Direct3D12Available}" Width="0.7*" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+
+                    <Grid Grid.Row="3" Margin="0,12,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="GraphicsScanButton"
+                                Content="SCAN GRAPHICS CAPABILITIES"
+                                Click="ScanGraphics_Click"
+                                Style="{StaticResource ActionButtonStyle}" />
+                        <TextBlock x:Name="GraphicsActivityText"
+                                   Grid.Column="1"
+                                   Text="The probe only reports DXGI adapter data and D3D12 device availability."
+                                   Foreground="{StaticResource MutedBrush}"
+                                   FontSize="11"
+                                   Margin="16,0,0,0"
+                                   TextTrimming="CharacterEllipsis"
+                                   VerticalAlignment="Center" />
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="1" Margin="0,0,0,18">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" Style="{StaticResource PanelStyle}" Margin="0,0,10,0">
+                    <StackPanel>
+                        <TextBlock Text="DETECTED DEVICES" FontSize="10" FontWeight="Bold" Foreground="{StaticResource MutedBrush}" />
+                        <TextBlock x:Name="DeviceCountText" Text="—" Margin="0,9,0,0" FontSize="26" FontWeight="SemiBold" />
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="1" Style="{StaticResource PanelStyle}" Margin="5,0">
+                    <StackPanel>
+                        <TextBlock Text="PROBLEM CODES" FontSize="10" FontWeight="Bold" Foreground="{StaticResource MutedBrush}" />
+                        <TextBlock x:Name="ProblemCountText" Text="—" Margin="0,9,0,0" FontSize="26" FontWeight="SemiBold" />
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="2" Style="{StaticResource PanelStyle}" Margin="10,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="UNSIGNED DRIVERS" FontSize="10" FontWeight="Bold" Foreground="{StaticResource MutedBrush}" />
+                        <TextBlock x:Name="UnsignedCountText" Text="—" Margin="0,9,0,0" FontSize="26" FontWeight="SemiBold" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Border Grid.Row="2" Style="{StaticResource PanelStyle}" Padding="16" Margin="0,0,0,14">
+                <DockPanel LastChildFill="True">
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                        <Button x:Name="InstallButton"
+                                Content="INSTALL VERIFIED INF"
+                                Click="InstallDriver_Click"
+                                Style="{StaticResource ActionButtonStyle}"
+                                Margin="8,0,0,0" />
+                        <Button x:Name="ExportButton"
+                                Content="EXPORT REPORT"
+                                Click="ExportReport_Click"
+                                Style="{StaticResource QuietButtonStyle}"
+                                Margin="8,0,0,0" />
+                        <Button x:Name="ManufacturerButton"
+                                Content="MANUFACTURER SITE"
+                                Click="OpenManufacturer_Click"
+                                Style="{StaticResource QuietButtonStyle}"
+                                Margin="8,0,0,0" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button x:Name="ScanButton"
+                                Content="SCAN DRIVERS"
+                                Click="ScanDrivers_Click"
+                                Style="{StaticResource ActionButtonStyle}" />
+                        <TextBox x:Name="SearchBox"
+                                 Width="220"
+                                 Height="38"
+                                 Margin="12,0,0,0"
+                                 Padding="10,8"
+                                 VerticalContentAlignment="Center"
+                                 Background="#FF0D141F"
+                                 Foreground="#FFE7EFF8"
+                                 BorderBrush="#FF2B394B"
+                                 TextChanged="SearchBox_TextChanged"
+                                 ToolTip="Filter devices by name, manufacturer or hardware ID" />
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+
+            <Border Grid.Row="3" Style="{StaticResource PanelStyle}" Padding="0" ClipToBounds="True">
+                <DataGrid x:Name="DeviceGrid"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          IsReadOnly="True"
+                          SelectionMode="Single"
+                          SelectionUnit="FullRow"
+                          SelectionChanged="DeviceGrid_SelectionChanged"
+                          Background="Transparent"
+                          RowBackground="#00101825"
+                          AlternatingRowBackground="#22192330"
+                          HorizontalGridLinesBrush="#332B3848"
+                          VerticalGridLinesBrush="Transparent"
+                          BorderThickness="0"
+                          HeadersVisibility="Column"
+                          GridLinesVisibility="Horizontal"
+                          CanUserResizeRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="DEVICE" Binding="{Binding DeviceName}" Width="2.1*" />
+                        <DataGridTextColumn Header="MANUFACTURER" Binding="{Binding Manufacturer}" Width="1.2*" />
+                        <DataGridTextColumn Header="DRIVER VERSION" Binding="{Binding DriverVersion}" Width="1*" />
+                        <DataGridTextColumn Header="DATE" Binding="{Binding DriverDate}" Width="0.85*" />
+                        <DataGridTextColumn Header="SIGNATURE" Binding="{Binding SignatureStatus}" Width="0.9*" />
+                        <DataGridTextColumn Header="STATUS" Binding="{Binding StatusLabel}" Width="0.9*" />
+                        <DataGridTextColumn Header="INF" Binding="{Binding InfName}" Width="0.8*" />
+                        <DataGridTextColumn Header="HARDWARE ID" Binding="{Binding DeviceId}" Width="2*" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+
+            <Grid Grid.Row="4" Margin="0,12,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="ActivityText"
+                           Text="Ready. Select SCAN DRIVERS to query Windows Plug and Play inventory."
+                           Foreground="{StaticResource MutedBrush}"
+                           FontSize="11"
+                           TextTrimming="CharacterEllipsis"
+                           VerticalAlignment="Center" />
+                <TextBlock Grid.Column="1"
+                           Text="v0.1.0  •  Local only"
+                           Foreground="#FF718096"
+                           FontSize="11"
+                           Margin="18,0,0,0"
+                           VerticalAlignment="Center" />
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

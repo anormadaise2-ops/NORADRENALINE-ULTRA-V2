@@ -1,0 +1,8 @@
+**/bin/
+**/obj/
+NORA-X1-DRIVER/BUILD/
+/dist/
+.vs/
+.idea/
+*.user
+*.suo
